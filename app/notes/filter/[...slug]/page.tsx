@@ -17,8 +17,7 @@ export default async function NotesPage({ params }: NotesPageProps) {
   const { slug } = await params;
 
   const rawTag = slug[0];
-    if (rawTag !== 'all' && !validTags.includes(rawTag)) {
-      
+  if (rawTag !== 'all' && !validTags.includes(rawTag)) {
     notFound();
   }
   const tag = rawTag === 'all' ? undefined : rawTag;
