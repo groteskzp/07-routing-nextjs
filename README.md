@@ -1,49 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with
-[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Homework 07: Routing in Next.js
 
-## Getting Started
+GoIT homework that builds **NoteHub** on the Next.js App Router. The focus is routing: nested layouts, a catch-all filter route, a parallel sidebar slot, an intercepting note preview, and a full note details page. Notes are stored through the public NoteHub API.
 
-First, run the development server:
+## Live demo
+
+[https://07-routing-nextjs-alpha-kohl.vercel.app](https://07-routing-nextjs-alpha-kohl.vercel.app)
+
+## Features
+
+- Home page with a short NoteHub intro and a shared header/footer (`Home`, `Notes`)
+- Notes list from the NoteHub public API (`GET /notes`), with 12 notes per page
+- Tag filter sidebar (parallel route): All notes, Todo, Work, Personal, Meeting, Shopping
+- Catch-all filter route `/notes/filter/[...slug]`; unknown tags call `notFound()`
+- Debounced keyword search (300 ms) that resets pagination to page 1
+- Pagination when the API reports more than one page (`react-paginate`)
+- Create a note in a modal (Formik + Yup: title 3–50 characters, content up to 500, required tag)
+- Delete a note from the list
+- Note details page `/notes/[id]` (title, tag, content, created date)
+- Intercepting route: “View details” from the list opens a preview modal; Close or back returns to the list; a direct visit still loads the full page
+- Server prefetch of notes and note details with TanStack Query `HydrationBoundary`
+- Route-level loading and error UI, plus a custom 404 page
+- Modal closes on Escape or backdrop click and locks body scroll while open
+
+## Tech stack
+
+- Next.js 16 (App Router, React Compiler)
+- React 19
+- TypeScript
+- TanStack Query
+- Axios
+- Formik and Yup
+- react-paginate
+- use-debounce
+- CSS Modules
+- ESLint (`eslint-config-next`)
+
+
+## Getting started
+
+1. Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/groteskzp/07-routing-nextjs.git
+cd 07-routing-nextjs
+npm install
+```
+
+2. Create a `.env.local` file in the project root with a NoteHub token (required by `lib/api.ts`):
+
+```bash
+NEXT_PUBLIC_NOTEHUB_TOKEN=your_token_here
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the
-result.
+4. Open [http://localhost:3000](http://localhost:3000) in the browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+## Scripts
 
-This project uses
-[`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
-to automatically optimize and load [Geist](https://vercel.com/font), a new font
-family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out
-[the Next.js GitHub repository](https://github.com/vercel/next.js) - your
-feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
-for more details.
+| Script | Command | Description |
+| --- | --- | --- |
+| `dev` | `npm run dev` | Start the Next.js development server |
+| `build` | `npm run build` | Create a production build |
+| `start` | `npm start` | Serve the production build |
+| `lint` | `npm run lint` | Run ESLint |
